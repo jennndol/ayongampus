@@ -1,0 +1,103 @@
+{% load i18n static %}
+<style type="text/css">
+    .navbar img {
+        display: inline;
+        margin-top: -13px;
+        margin-right: 0.3em;
+    }
+    .nav>li>a>img{
+        margin-top: 1px;
+    }
+</style>
+<nav class="navbar {% if navbar_type %} {{ navbar_type }} {% else %}navbar-ct-primary{% endif %} navbar-fixed-top"
+     role="navigation-demo">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#navigation-example-2">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'home' %}" style="">
+                <div class="pull-right">ayongampus</div>
+                <img src="{% static "assets/img/logo.png" %}" width="50px">
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="navigation-example-2">
+            {% if not hide_search %}
+                <form class="navbar-form navbar-left" role="search" action="{% url 'search' %}">
+                    <div class="input-group" style="width:210px">
+                        <input type="text" class="form-control" name="q" placeholder="Search">
+                        <span class="input-group-btn">
+                      <button type="submit" class="btn btn-default"><span
+                              class="glyphicon glyphicon-search"></span></button>
+                    </span>
+                    </div>
+                </form>
+            {% endif %}
+            <ul class="nav navbar-nav navbar-right">
+                <li class="visible-md visible-lg visible-sm">
+                    <a href="#" id="notifications" data-container="body" data-toggle="popover"
+                       data-placement="bottom" title="Notifications">
+                        <span class="glyphicon glyphicon-globe"></span>
+                    </a>
+                </li>
+                <li class="visible-xs">
+                    <a href="{% url 'feeds' %}">
+                        <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+                        {% trans 'News Feed' %}
+                    </a>
+                </li>
+                <li class="visible-xs">
+                    <a href="{% url 'articles' %}">
+                        <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+
+                        {% trans 'Articles' %}
+                    </a>
+                </li>
+                <li class="visible-xs">
+                    <a href="{% url 'questions' %}">
+                        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
+                        {% trans 'Forum' %}
+                    </a>
+                </li>
+                <li class="visible-xs">
+                    <a href="{% url 'followers' %}">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        {% trans 'Members' %}
+                    </a>
+                </li>
+                <li class="visible-xs">
+                    <a href="{% url 'quiz_index' %}">
+                        <span class="glyphicon glyphicon-leaf" aria-hidden="true"></span>
+                        {% trans 'Quizzes' %}
+                    </a>
+                </li>
+                <li class="visible-xs">
+                    <a href="{% url 'notifications' %}">
+                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                        {% trans 'Notification' %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'profile' user.username %}">
+                        <img src="{{ user.profile.get_picture }}" width="30px">
+                        {{ user.profile.get_screen_name }}
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'inbox' %}"><span class="badge pull-right"
+                                                              id="unread-count">0</span> Inbox</a></li>
+                        <li><a href="{% url 'settings' %}">{% trans 'Account Settings' %}</a></li>
+                        <li class="divider"></li>
+                        <li><a href="{% url 'logout' %}">{% trans 'Log out' %}</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load i18n staticfiles %}
+
+{% block title %}{{ page_user.profile.get_screen_name }}{% endblock %}
+
+{% block stylesheet %}
+    <link href="{% static 'css/profile.css' %}" rel="stylesheet">
+    <link href="{% static 'css/feeds.css' %}" rel="stylesheet">
+    <script src="{% static 'js/jquery.bullseye-1.0-min.js' %}"></script>
+    <script src="{% static 'js/feeds.js' %}"></script>
+    <script src="{% static 'assets/css/examples.css' %}"></script>
+{% endblock stylesheet %}
+{% block  body %}
+    {% include 'navbar.html' %}
+    <div class="wrapper" style="margin-top: 2.5em;">
+        <div class="profile-content section-gray">
+            <div class="container">
+                <div class="row owner" style="padding-top: 2em;">
+                    <div class="col-md-2 col-md-offset-5 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3 text-center">
+                        <div class="avatar">
+                            <img src="{{ page_user.profile.get_picture }}" alt="Circle Image"
+                                 class="img-circle img-no-padding img-responsive">
+                        </div>
+                        <div class="name">
+                            <h4>{{ page_user.profile.get_screen_name }}<br/>
+                                {% if page_user.profile.job_title %}
+                                    <small>{{ page_user.profile.job_title }}</small>
+                                {% endif %}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3 text-center">
+                        {% if page_user.profile.bio %}
+                            <p>{{ page_user.profile.bio }}</p>
+                            <br/>
+                        {% endif %}
+                        <a class="btn" href="{% url 'settings' %}"><i class="fa fa-cog"></i> {% trans 'Settings' %}</a>
+                        <hr>
+
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+    {% block content %}
+        <div class="profile">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="stream-update">
+                        <a href="#"><span class="new-posts"></span> new posts</a>
+                    </div>
+                    <ul class="stream">
+                        {% for feed in feeds %}
+                            {% include 'feeds/partial_feed.html' with feed=feed %}
+                        {% endfor %}
+                    </ul>
+                    <div class="load">
+                        <div class='uil-reload-css reload-small' style=''>
+                            <div>Loading...</div>
+                        </div>
+                    </div>
+                    <form method="get" action="{% url 'load' %}" id="load_feed" autocomplete="off">
+                        <input type="hidden" name="feed_source" id="feed_source" value="{{ page_user.pk }}">
+                        <input type="hidden" name="from_feed" value="{{ from_feed }}">
+                        <input type="hidden" name="page" value="{{ page }}">
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}
+
+{% block javascript %}
+    <!--  Plugins -->
+    <script src="{% static 'assets/js/ct-paper-checkbox.js' %}"></script>
+    <script src="{% static 'assets/js/ct-paper-radio.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap-select.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap-datepicker.js' %}"></script>
+{% endblock %}

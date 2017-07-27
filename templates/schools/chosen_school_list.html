@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block javascript %}
+{% endblock %}
+
+{% block content %}
+    <h3 class="page-header">Education</h3>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {% include 'schools/includes/partial_chosen_school_list.html' %}
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-book">
+        <div class="modal-dialog">
+            <div class="modal-content"></div>
+        </div>
+{% endblock %}

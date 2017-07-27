@@ -1,0 +1,68 @@
+{% extends 'dashboard/base.html' %}
+{% load widget_tweaks quiz_tags i18n humanize %}
+{% block header %}
+    <ol class="breadcrumb">
+        <li>
+            <a href="#">Home</a>
+        </li>
+        <li>
+            <a href="{% url 'core_quiz_detail' quiz.url %}">{{ quiz }}</a>
+        </li>
+        <li class="active">
+            <a href="">{% trans 'Questions' %}</a>
+        </li>
+    </ol>
+    <div class="page-header">
+        <a href="{% url 'core_subject_list' %}" class="btn btn-lg pull-right">
+            <i class="glyphicon glyphicon-list-alt"></i>
+        </a>
+        <h3>{{ quiz }}</h3>
+    </div>
+{% endblock %}
+{% block content %}
+    <form action="" method="post">{% csrf_token %}
+        {% for field in form %}
+            <div class="form-group{% if field.errors %} has-error{% endif %}">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {% render_field field class="form-control" %}
+                {% for error in field.errors %}
+                    <p class="help-block">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <input class="btn btn-success btn-block" type="submit" value="{% trans 'Choose Questions' %}"/>
+    </form>
+    <hr>
+    <div class="page-header">
+        <h2>Question List</h2>
+    </div>
+    <div class="panel panel-default">
+        <table class="table table-responsive">
+            <thead>
+            <tr>
+                <th>No</th>
+                <th>Question</th>
+                <th>Type</th>
+                <th>Created at</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for question in questions %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ question }}</td>
+                    <td>{{ question.cast|classname }}</td>
+                    <td><i class="glyphicon glyphicon-time"></i> {{ question.created_at|naturaltime }}</td>
+                    <td>
+                        <a title="{% trans 'remove from' %} {{ quiz }} {% trans 'question list' %}"
+                           href="{% url 'core_remove_question_from_quiz' quiz.pk question.pk %}"
+                           class="btn btn-danger btn-sm"><i
+                                class="glyphicon glyphicon-remove"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

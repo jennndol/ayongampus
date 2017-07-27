@@ -1,0 +1,252 @@
+{% extends 'base.html' %}
+{% load staticfiles i18n %}
+{% block stylesheet %}
+    <link href="{% static 'assets/css/demo.css' %}" rel="stylesheet"/>
+    <link rel="stylesheet" href="{% static 'assets/css/examples.css' %}">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+    <style>
+        .help-block {
+            font-size: 12px;
+            margin-top: -5px;
+        }
+
+        .navbar img {
+            display: inline;
+            margin-top: -13px;
+            margin-right: 0.3em;
+        }
+    </style>
+{% endblock %}
+{% block title %} {% trans 'Registration' %} {% endblock %}
+
+{% block body %}
+    <body class="full-screen register">
+    <nav class="navbar navbar-ct-transparent navbar-fixed-top" role="navigation-demo" id="register-navbar">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Ayongampus
+                    <img width="40px;" src="{% static 'assets/img/logo.png' %}" class="pull-left"></a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navigation-example-2">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="{% url 'login' %}" class="btn btn-success btn-fill">{% trans 'Log in' %}</a>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-->
+    </nav>
+
+    <div class="wrapper" style="margin-top: -4.4em;">
+        <div class="background" style="background-image: url({% static 'assets/img/rock.jpg' %});">
+            <div class="filter-black"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-1 col-sm-7 col-xs-12">
+                        <div class="info info-horizontal">
+                            <div class="icon">
+                                <i class="fa fa-mortar-board"></i>
+                            </div>
+                            <div class="description">
+                                <h3> {% trans 'Make your school activities happier' %} </h3>
+                                {% trans 'ayongampus is online education system. You can be a teacher or a student in here. Already have an account?,' %}
+                                <a href="{% url 'login' %}">{% trans 'Login here!' %}</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-5 col-xs-12">
+                        <div class="demo-card">
+                            <h3 class="title text-center">{% trans 'Registration' %}</h3>
+                            <form role="form" method="post" action="{% url 'signup' %}">
+                                {% csrf_token %}
+                                {% for field in form.visible_fields %}
+                                    <div class="form-group{% if field.errors %} has-error{% endif %}">
+                                        {{ field }}
+                                        {% if field.help_text %}
+                                            <span class="help-block">{{ field.help_text|safe }}</span>
+                                        {% endif %}
+                                        {% for error in field.errors %}
+                                            <label class="control-label">{{ error }}</label>
+                                        {% endfor %}
+                                    </div>
+                                {% endfor %}
+                                <button type="submit"
+                                        class="btn btn-primary btn-block btn-fill">{% trans 'Register' %}</button>
+                            </form>
+                            <div class="login">
+                                <p style="font-size: small; margin-top: -1em;">By clicking register, you agree with <a
+                                        data-toggle="modal" data-target="#myModal">Terms and
+                                    Privacy</a></p>
+                                <p>{% trans 'Already have an account? ' %}<a
+                                        href="{% url 'login' %}">{% trans 'Log in' %}</a>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-footer text-center">
+                <h6>&copy; 2016, made with <i class="fa fa-heart heart"></i> by ayongampus</h6>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">TERM AND CONDITION</h4>
+                </div>
+                <div class="modal-body">
+                    {% autoescape on %}
+                        PLEASE READ THESE TERMS OF USE OF THE WEB WITH GOOD. This relates to the rights you in using
+                        this
+                        web. In addition to the rules of use, please read our Privacy Policy This web.
+
+                        1. Introduction
+                        ayongampus.com is a website that can be used by students and teachers at the local high school
+                        level. This website contains features such as quizzes, exercises, forums, message, and articles.
+                        Websites are made to improve the quality of education in the area.
+
+                        2. Users
+                        Web users must be at least 14 years old and registered in one of the schools partner who use
+                        this
+                        web. By agreeing to these term and condition, you are deemed to have read, know, and understand
+                        the
+                        entire contents of the existing agreements in these term and condition. All information
+                        contained in
+                        this web has been adapted by us. When do you think there are some information that was not
+                        relevant
+                        in this website please let us know so we can take an action for it.
+
+                        3. Site Acces
+                        ayongampus.com give you unlimited and non-exclusive access, and give permission for personal
+                        purpose
+                        and not to be commercialized. This permission is given directly to you and should not be granted
+                        or
+                        licensed to others. Permission for use is granted in the form of access to the information
+                        available
+                        on this website.
+
+                        4. Membership
+                        To be able to use this web application, you must register by providing your information such as
+                        full
+                        name, date of birth, National Student Identification Number, E-mail addresses, and the password.
+                        The
+                        information you provide to this web should be complete so that we can contact you if there is
+                        some
+                        changes in the future. You also need to provide the latest information when you changes your
+                        account
+                        related information.
+
+                        5. Term and Termination
+                        This agreement began when you register as a member on ayongampus.com website and will continue
+                        until
+                        you close your account.
+                        Account termination will be done if you become a part in violation of the provisions of this
+                        agreement. The type of violation are ethics violation of account use, provoked of racism, and
+                        other
+                        violation which can disturb the website and cause harm to the other party. If one of the types
+                        of
+                        the offense was committed, ayongampus.com team may suspend, deactivate and / or delete accounts
+                        that
+                        committed the offense.
+
+                        6. Restrictions
+                        You are not allowed to provide the types of the following information:
+
+                        - Information contained pornographic
+                        - Containing elements of hatred
+                        - Violate the copyrights of others
+                        - Using another person's account or request information about a username and password to other
+                        user
+                        so that they can access a the account and they make an offense on it
+                        - Promote adverse business
+                        - Collecting user information for unjustified purposes by the team ayongampus.com
+                        - Disseminate information hoax
+                        - Breaking the law based on UU ITE
+
+                        7. Communication Ethics
+                        You are required to use the good communication with other user, be polite, and respectful of
+                        others.
+
+                        8. User Rights and Permission
+                        Users of this website have the rights of information provided on this website. ayongampus.com
+                        parties can deploy information which has been given widely on the website ayongampus.com and
+                        other
+                        parties associated with ayongampus.com.
+
+                        9. Indemnity and other
+                        Provisions for compensation will be enforced if there is violation of the agreement and It
+                        tarnish
+                        the website of ayongampus.com and it causes damage for ayongampus.com or other aggrieved parties
+                        for
+                        violations that you do. If there is a problem occur between you and a third party involving
+                        ayongampus.com, ayongampus's has the right to conduct any defense and you have to agree and
+                        cooperate with our defense. All types of offenses committed by users is the responsibility of
+                        the
+                        user and ayongampus.com do not have any responsibility of it.
+
+                        10. Privacy Policy
+                        If you have any questions relating to the privacy policy of ayongampus.com site, you can contact
+                        our
+                        email address ayongampus123@gmail.com. For ayongampus.com, the privacy of visitors and users of
+                        our
+                        Web site is something important that we need to maintain. This privacy policy explains in detail
+                        about the types of personal information that we collect and we store it in our database system.
+                        This
+                        policy also explain the use of users' personal information.
+
+                        - Log File
+                        ayongampus.com use log files as a standard procedure for hosting companies in order to analyze
+                        the
+                        service provided. Information in the log files includes IP, browser type, ISP, time of use, and
+                        number of clicks. That information is used to collect demographic information and track user
+                        trends
+                        so that we can manage our web.
+                        - Cookies
+                        ayongampus.com use cookies to store and record the information and activities performed by the
+                        user
+                        so that we can customize the information based on the type of browser you are using
+                        - Third-Party Privacy Policy
+                        This privacy policy does not bind the other parties who act as third parties. If you wish to
+                        disable
+                        cookies, you can do this by changing the rules on the website you use.
+                        - Information for Students
+                        We are trying to display educative and motivating information for students. If there are
+                        articles or
+                        information that is considered not good and harm students, the users of this website can contact
+                        us
+                        immediately so we can remove the information.
+                        - Approval
+                        ayongampus.com assume you agree to the privacy policy that we have when you visit the website
+                        ayongampus.com.
+                    {% endautoescape %}
+                </div>
+                <div class="modal-footer">
+                    <div class="right-side">
+                        <button type="button" class="btn btn-default btn-simple" data-dismiss="modal">Close
+                        </button>
+                    </div>
+                    <div class="divider"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    </body>
+    {% block footer %}
+    {% endblock %}
+{% endblock %}

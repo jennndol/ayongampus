@@ -1,0 +1,11 @@
+{% for chosen_school in chosen_schools %}
+  {% if chosen_school.is_graduated == True %}
+    Studied
+  {% else %}
+    Studying
+  {% endif %}
+     at <b><a href="#">{{ chosen_school.get_schools }}</a></b><br>
+     Class: {{ chosen_school.class_room }}
+{% empty %}
+  No chosen school
+{% endfor %}

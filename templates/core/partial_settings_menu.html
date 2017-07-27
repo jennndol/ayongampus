@@ -1,0 +1,11 @@
+{% load i18n %}
+<div class="nav nav-tabs">
+    <li class="{% if active == 'profile' %} active{% endif %}">
+        <a href="{% url 'settings' %}"> {% trans 'Profile' %}</a>
+    </li>
+    <li class="{% if active == 'picture' %} active{% endif %}">
+        <a href="{% url 'picture' %}">{% trans 'Picture' %}</a></li>
+    <li class="{% if active == 'password' %} active{% endif %}">
+        <a href="{% url 'password' %}">{% trans 'Password' %}</a>
+    </li>
+</div>

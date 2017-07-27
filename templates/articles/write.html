@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load staticfiles i18n %}
+
+{% block stylesheet %}
+    <script src="{% static 'assets/js/jquery.tagsinput.js' %}"></script>
+    <script src="{% static 'js/articles.js' %}"></script>
+{% endblock stylesheet %}
+
+{% block content %}
+
+        <div class="page-header">
+            <a href="{% url 'drafts' %}" class="btn btn-default pull-right"
+               style="margin-right: .8em">{% trans 'Drafts' %}</a>
+            <h1>{% trans 'Articles' %}</h1>
+        </div>
+        <ol class="breadcrumb">
+            <li><a href="{% url 'articles' %}">{% trans 'Articles' %}</a></li>
+            <li class="active">{% trans 'Write Article' %}</li>
+        </ol>
+        <form action="{% url 'write' %}" method="post" role="form">
+            {% csrf_token %}
+            {{ form.status }}
+            {% for field in form.visible_fields %}
+                <div class="form-group{% if field.errors %} has-error{% endif %}">
+                    <label for="{{ field.label }}" class="control-label">{{ field.label }}</label>
+                    {% if field.label == 'Content' %}
+                        {% include 'markdown_editor.html' with textarea='id_content' %}
+                    {% endif %}
+                    {{ field }}
+                    {% if field.help_text %}
+                        <span class="help-block">{{ field.help_text }}</span>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <label class="control-label">{{ error }}</label>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <div class="form-group">
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary btn-fill publish">{% trans 'Publish' %}</button>
+                    <button type="button" class="btn btn-danger draft">{% trans 'Save Draft' %}</button>
+                    <button type="button" class="btn btn-info preview" data-toggle="modal"
+                            data-target="#preview">{% trans 'Preview' %}</button>
+                    <a href="{% url 'articles' %}" class="btn btn-default">{% trans 'Cancel' %}</a>
+                </div>
+            </div>
+        </form>
+
+        <div class="modal fade" id="preview">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Article Preview</h4>
+                    </div>
+                    <div class="modal-body"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock content %}

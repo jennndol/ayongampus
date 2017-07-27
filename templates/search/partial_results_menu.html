@@ -1,0 +1,22 @@
+{% load i18n %}
+
+<ul class="nav nav-tabs">
+    <li class="{% if active == 'feed' %} active{% endif %}"><a
+            href="{% url 'search' %}?q={{ querystring }}&type=feed">{% trans 'Feeds' %}
+        <span class="badge">{{ count.feed }}</span></a></li>
+    <li class="{% if active == 'articles' %} active{% endif %}"><a
+            href="{% url 'search' %}?q={{ querystring }}&type=articles">{% trans 'Articles' %} <span
+            class="badge">{{ count.articles }}</span>
+    </a></li>
+    <li class="{% if active == 'questions' %} active{% endif %}"><a
+            href="{% url 'search' %}?q={{ querystring }}&type=questions">{% trans 'Questions' %} <span
+            class="badge">{{ count.questions }}</span>
+    </a></li>
+    <li class="{% if active == 'users' %} active{% endif %}"><a
+            href="{% url 'search' %}?q={{ querystring }}&type=users">{% trans 'Users' %} <span
+            class="badge">{{ count.users }}</span>
+    </a></li>
+    <li><a href="" style="color: red;">Courses</a></li>
+    <li><a href="" style="color: red;">Quiz</a></li>
+    <li><a href="" style="color: red;">Campus</a></li>
+</ul>

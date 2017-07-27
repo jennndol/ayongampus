@@ -1,0 +1,18 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+{% block title %}{% trans "All Quizzes" %}{% endblock %}
+
+{% block content %}
+    <h2>{% trans "Subject list" %}</h2>
+
+    <ul>
+        {% for cat in subject_list %}
+            <li>
+                <a href="{% url 'quiz_subject_list_matching' subject_name=cat.subject %}">
+                    {{ cat.subject }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

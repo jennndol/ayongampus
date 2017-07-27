@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block stylesheet %}
+    <link href="{% static 'css/feeds.css' %}?v=1" rel="stylesheet">
+    <script src="{% static 'js/jquery.bullseye-1.0-min.js' %}"></script>
+    <script src="{% static 'js/feeds.js' %}?v=1"></script>
+    <style type="text/css">
+        body {
+            background: #f0f0f0;
+        }
+
+        .panel {
+            margin: 0;
+        }
+
+        .small-user-name {
+            color: #0f0f0f;
+            font-size: 12px;
+            display: inline;
+            padding-left: 0.3em;
+        }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="panel panel-default">
+            <!-- <div class="text-center">
+                    <button type="button" class="btn btn-success btn-compose"
+                            title="{% trans 'Press Ctrl + Enter to compose' %}">
+                        <span class="glyphicon glyphicon-pencil"></span> {% trans 'Create Post' %}
+                    </button>
+                </div> -->
+            <div class="panel-heading">
+                <h4 class="panel-title pull-right" style="color: #e8e7e3;">{% trans 'Feeds' %}</h4>
+            </div>
+            <hr>
+            <div class="panel-body">
+
+                <div class="compose">
+                    <!-- <h2>{% trans "Create a new post" %}</h2> -->
+                    <form role="form" id="compose-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="last_feed">
+                        <div class="form-group">
+                                <textarea id="post-feed" class="form-control border-input"
+                                          placeholder="{% trans 'Write down your thought here...' %}" rows="3"
+                                          name="post"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary btn-post">
+                                {% trans 'Post' %}
+                            </button>
+                            <span class="help-block help-count pull-right">255</span>
+                        </div>
+                    </form>
+                </div>
+                <div class="stream-update">
+                    <a href="#"><span class="new-posts"></span> {% trans 'new posts' %}</a>
+                </div>
+                <ul class="stream">
+                    {% for feed in feeds %}
+                        {% include 'feeds/partial_feed.html' with feed=feed %}
+                    {% endfor %}
+                </ul>
+                <div class="load">
+                    <div class='uil-reload-css reload-small' style=''>
+                        <div>Loading...</div>
+                    </div>
+                </div>
+                <form method="get" action="{% url 'load' %}" id="load_feed" autocomplete="off">
+                    <input type="hidden" name="feed_source" id="feed_source" value="all">
+                    <input type="hidden" name="from_feed" value="{{ from_feed }}">
+                    <input type="hidden" name="page" value="{{ page }}">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

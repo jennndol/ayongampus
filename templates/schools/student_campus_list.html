@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block stylesheet %}
+	<style type="text/css">
+		body{
+			/*background: #f0f0f0;*/
+		}
+	</style>
+{% endblock stylesheet %}
+{% block content %}
+	<div class="col-md-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<a href="" class="pull-right"><i class="glyphicon glyphicon-plus" aria-hidden="true"></i></a>
+
+				<h3 class="panel-title">{% trans "Education Information" %}</h3>
+			</div>
+			<div class="panel-body">
+				{% for x in student_campus_list %}
+					{% if x.is_graduated == False %}
+						Studying
+					{% else %}
+						Studied
+					{% endif %}
+					at <b>{{x.school}}</b><br>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+{% endblock content %}

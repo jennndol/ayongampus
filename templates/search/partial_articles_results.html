@@ -1,0 +1,20 @@
+{% load i18n %}
+
+<h3>{% trans 'Articles' %}</h3>
+{% if results %}
+    <ul class="articles-results">
+        {% for article in results %}
+            <li article-slug="{{ article.slug }}">
+                <h3><a href="{% url 'article' article.slug %}">{{ article.title }}</a></h3>
+                <div class="author text-muted">by {{ article.create_user.profile.get_screen_name }}</div>
+                <div class="category text-muted"><i class="fa fa-tags" aria-hidden="true"></i>
+                    {% for tag in article.get_tags %}
+                        <a href="{% url 'tag' tag.tag %}">{{ tag }}</a>
+                    {% endfor %}</div>
+                <div class="date text-muted"><i class="icon-clock"></i> {{ article.create_date }}</div>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h4 class="no-result">{% trans 'No article found' %} :(</h4>
+{% endif %}

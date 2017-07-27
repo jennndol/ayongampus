@@ -1,0 +1,28 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+{% block header %}
+    <ol class="breadcrumb">
+        <li>
+            <a href="#">Home</a>
+        </li>
+        <li class="active">
+            <a href="{% url 'core_overview' %}">{% trans 'Overview' %}</a>
+        </li>
+    </ol>
+    <div class="page-header">
+        <a href="{% url 'core_overview' %}" class="btn btn-lg pull-right">
+            <i class="glyphicon glyphicon-dashboard"></i>
+        </a>
+        <h3>{% trans 'Overview' %}</h3>
+    </div>
+{% endblock %}
+{% block content %}
+    Things we must have to create quiz are:
+    <ol>
+        <li>Subject</li>
+        <li>Question</li>
+        <li>Quiz</li>
+    </ol>
+{% endblock %}
+
+{#TODO finish this stuff later#}

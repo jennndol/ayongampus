@@ -1,0 +1,62 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+{% block header %}
+    <ol class="breadcrumb">
+        <li>
+            <a href="#">Home</a>
+        </li>
+        <li class="active">
+            <a href="{% url 'core_subject_list' %}">Subjects</a>
+        </li>
+    </ol>
+    <div class="page-header">
+        <a href="{% url 'core_subject_list' %}" class="btn btn-lg pull-right">
+            <i class="glyphicon glyphicon-list-alt"></i>
+        </a>
+        <h3>{% trans 'Subject List' %}</h3>
+    </div>
+{% endblock %}
+{% block content %}
+    <div class="panel panel-default">
+        <!-- Table -->
+        <table class="table table-bordered">
+            {% for subject in subjects %}
+                <thead>
+                <tr>
+                    <td>No</td>
+                    <td>
+                        <div class="pull-right">
+                            <a href="{% url 'core_subject_update' subject.pk %}" class="btn btn-sm btn-warning">
+                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                            </a>
+                            <a href="{% url 'core_subject_delete' subject.pk %}" class="btn btn-sm btn-danger">
+                                <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                        #{{ forloop.counter }}</td>
+                </tr>
+                <tr>
+                    <td>Subject</td>
+                    <td>{{ subject }}</td>
+                </tr>
+                <tr>
+                    <td>Chapter List</td>
+                    <td>
+                        <ol>
+                            {% for chapter in subject.chapter_set.all %}
+                                <li>{{ chapter.chapter }}</li>
+                            {% empty %}
+                                <p>{% trans "There's no chapter inside" %}</p>
+                            {% endfor %}
+                        </ol>
+                    </td>
+                </tr>
+                </thead>
+            {% empty %}
+                <h4 style="padding: 2em;" class="text-center">{% trans "There's no subject to be displayed" %}</h4>
+            {% endfor %}
+        </table>
+    </div>
+    <a type="button" class="btn btn-primary" href="{% url 'core_subject_add' %}">Add New
+        Subject</a>
+{% endblock %}

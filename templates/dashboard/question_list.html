@@ -1,0 +1,61 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n quiz_tags humanize %}
+{% block header %}
+    <ol class="breadcrumb">
+        <li>
+            <a href="#">Home</a>
+        </li>
+        <li class="active">
+            <a href="{% url 'core_question_list' %}">{% trans 'Questions' %}</a>
+        </li>
+    </ol>
+    <div class="page-header">
+        <a href="{% url 'core_question_list' %}" class="btn btn-lg pull-right" title="{% trans 'Question List' %}">
+            <i class="glyphicon glyphicon-question-sign"></i>
+        </a>
+        <h3>{% trans 'Question List' %}</h3>
+    </div>
+{% endblock %}
+{% block content %}
+    <div class="panel panel-default">
+        <table class="table table-responsive">
+            <thead>
+            <tr>
+                <th>No</th>
+                <th>{% trans 'Question' %}</th>
+                <th>{% trans 'Subject' %}</th>
+                <th>{% trans 'Type' %}</th>
+                <th>{% trans 'Created at' %}</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for question in questions %}
+                <tr>
+                    <td>#{{ forloop.counter }}</td>
+                    <td>{{ question }}</td>
+                    <td>{{ question.chapter.subject }}</td>
+                    <td>{{ question.cast|classname }}</td>
+                    <td><i class="glyphicon glyphicon-time"></i> {{ question.created_at|naturaltime }}</td>
+                    <td>
+                        {% if question.cast|classname == 'MCQuestion' %}
+                            <a href="{% url 'core_mcquestion_update' question.id %}" class="btn btn-sm btn-warning"
+                               title="{% trans 'edit multiple choice question' %}"><i class="glyphicon glyphicon-edit"></i>Edit</a>
+                        {% elif question.cast|classname == 'Essay_Question' %}
+                            <a href="{% url 'core_essay_update' question.id %}" class="btn btn-sm btn-warning"><i
+                                    class="glyphicon glyphicon-edit"></i>Edit</a>
+                        {% elif question.cast|classname == 'TF_Question' %}
+                            <a href="{% url 'core_tfquestion_update' question.id %}" class="btn btn-sm btn-warning"><i
+                                    class="glyphicon glyphicon-edit"></i>Edit</a>
+                        {% endif %}
+                        <a href="{% url 'core_question_delete' question.pk %}" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i>Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <a href="{% url 'core_mcquestion_add' %}" class="btn btn-primary">Add Multiple Choice</a>
+    <a href="{% url 'core_tfquestion_add' %}" class="btn btn-primary">Add True False</a>
+    <a href="{% url 'core_essay_add' %}" class="btn btn-primary">Add Essay</a>
+{% endblock %}

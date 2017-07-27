@@ -1,0 +1,71 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Correction" %}{% endblock %}
+{% block header %}
+    <ol class="breadcrumb">
+        <li>
+            <a href="#">Home</a>
+        </li>
+        <li class="active">
+            <a href="{% url 'core_quiz_marking' %}">{% trans 'Correction' %}</a>
+        </li>
+    </ol>
+    <div class="page-header">
+        <a href="{% url 'core_quiz_marking' %}" class="btn btn-lg pull-right" title="{% trans 'Correction' %}">
+            <i class="glyphicon glyphicon-check"></i>
+        </a>
+        <h3>{% trans 'Correction' %}</h3>
+    </div>
+{% endblock %}
+{% block content %}
+    {% if sitting_list %}
+
+        <table class="table table-bordered table-striped">
+
+            <thead>
+            <tr>
+                <th>{% trans "User" %}</th>
+                <th>{% trans "Quiz" %}</th>
+                <th>{% trans "Completed" %}</th>
+                <th>{% trans "Score" %}(%)</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <form action="" method="GET">
+                    <td><input type="text" name="user_filter"/></td>
+                    <td><input type="text" name="quiz_filter"/></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <button type="submit" class="btn btn-default">{% trans "Filter" %}</button>
+                    </td>
+                </form>
+            </tr>
+
+
+            {% for sitting in sitting_list %}
+
+                <tr>
+{#                    <td>{{ sitting.user.profile.get_screen_name }}</td>#}
+                    <td>{{ sitting.user.username }}</td>
+                    {#                    TODO check if it's correct or not#}
+                    <td>{{ sitting.quiz }}</td>
+                    <td>{{ sitting.end|date }}</td>
+                    <td>{{ sitting.get_percent_correct }}</td>
+                    <td>
+                        <a href="{% url 'core_quiz_marking_detail' pk=sitting.id %}">
+                            {% trans "View details" %}
+                        </a>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+    {% else %}
+        <p>{% trans "There are no matching quizzes" %}.</p>
+    {% endif %}
+{% endblock %}

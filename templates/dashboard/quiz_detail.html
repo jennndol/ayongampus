@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block header %}
+    <ol class="breadcrumb">
+        <li>
+            <a href="#">Home</a>
+        </li>
+        <li>
+            <a href="{% url 'core_quiz_list' %}">{% trans 'Quizzes' %}</a>
+        </li>
+        <li class="active">
+            <a href="{% url 'core_quiz_detail' quiz.url %}">{{ quiz }}</a>
+        </li>
+    </ol>
+    <div class="page-header">
+        <a href="{% url 'core_quiz_list' %}" class="btn btn-lg pull-right">
+            <i class="glyphicon glyphicon-th-large"></i>
+        </a>
+        <h3>{{ quiz }}</h3>
+    </div>
+{% endblock %}
+{% block content %}
+    <div class="panel panel-default">
+        <!-- Table -->
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <td>{% trans 'Quiz' %}</td>
+                <td>
+                    {{ quiz }}</td>
+            </tr>
+            <tr>
+                <td>{% trans 'Description' %}</td>
+                <td>{{ quiz.description }}</td>
+            </tr>
+            <tr>
+                <td>{% trans 'Subject' %}</td>
+                <td>{{ quiz.subject }}</td>
+            </tr>
+            {#            <tr>#}
+            {#                <td>{% trans 'Chapter List' %}</td>#}
+            {#                <td>#}
+            {#                    TODO chapter list#}
+            {#                    {{ quiz.question_set.all }}#}
+            {#                </td>#}
+            {#            </tr>#}
+            <tr>
+                <td>URL</td>
+                <td>
+                    {{ quiz.url }}
+                </td>
+            </tr>
+            <tr>
+                <td>{% trans 'Pass Mark' %}</td>
+                <td>
+                    {{ quiz.pass_mark }}
+                </td>
+            </tr>
+            <tr>
+                <td>{% trans 'Maximum Questions' %}</td>
+                <td>
+                    {{ quiz.max_questions }}
+                </td>
+            </tr>
+            <tr>
+                <td>{% trans 'Random Order' %}</td>
+                <td>
+                    {{ quiz.random_order }}
+                </td>
+            </tr>
+            <tr>
+                <td>{% trans 'Show At End' %}</td>
+                <td>
+                    {{ quiz.answers_at_end }}
+                </td>
+            </tr>
+            <tr>
+                <td>{% trans 'Show At End' %}</td>
+                <td>
+                    {{ quiz.exam_paper }}
+                </td>
+            </tr>
+            <tr>
+                <td>{% trans 'Single Attempt' %}</td>
+                <td>
+                    {{ quiz.single_attempt }}
+                </td>
+            </tr>
+            <tr>
+                <td>{% trans 'Text To Show If Success' %}</td>
+                <td>
+                    {{ quiz.success_text }}
+                </td>
+            </tr>
+            <tr>
+                <td>{% trans 'Text To Show If Fail' %}</td>
+                <td>
+                    {{ quiz.fail_text }}
+                </td>
+            </tr>
+            <tr>
+                <td>{% trans 'Draft' %}</td>
+                <td>
+                    {{ quiz.draft }}
+                </td>
+            </tr>
+
+            </thead>
+        </table>
+    </div>
+    <div class="text-center">
+        <a href="{% url 'core_question_add' quiz.pk %}" class="btn btn-success btn-lg btn-block">
+            Show and Add Questions
+        </a>
+    </div>
+{% endblock %}

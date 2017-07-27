@@ -1,0 +1,52 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n static %}
+{% block javascript %}
+    <script src="{% static 'core/js/core_quizzes.js' %}"></script>
+{% endblock %}
+{% block header %}
+    <ol class="breadcrumb">
+        <li>
+            <a href="#">Home</a>
+        </li>
+        <li class="active">
+            <a href="{% url 'core_quiz_list' %}">{% trans "Quizzes" %}</a>
+        </li>
+    </ol>
+    <div class="page-header">
+        <a href="{% url 'core_quiz_list' %}" class="btn btn-lg pull-right">
+            <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+        </a>
+        <h3>{% trans 'Quiz List' %}</h3>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    <table class="table" id="quiz-table">
+        <thead>
+        <tr>
+            <th>{% trans "Title" %}</th>
+            <th>{% trans "Subject" %}</th>
+            <th>{% trans "Exam Paper" %}</th>
+            <th>{% trans "Single Attempt" %}</th>
+            <th>{% trans "Pass Score" %}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% include 'dashboard/includes/partial_quiz_list.html' %}
+        </tbody>
+    </table>
+    <p>
+        <button type="button"
+                class="btn btn-primary js-create-quiz"
+                data-url="{% url 'core_quiz_create' %}">
+            New quiz
+        </button>
+    </p>
+    <!-- THE MODAL WE WILL BE USING -->
+    <div class="modal fade" id="modal-quiz">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            </div>
+        </div>
+{% endblock %}

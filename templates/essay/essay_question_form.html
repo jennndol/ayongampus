@@ -1,0 +1,65 @@
+{% extends 'dashboard/base.html' %}
+{% load i18n %}
+{% block header %}
+    <ol class="breadcrumb">
+        <li>
+            <a href="#">Home</a>
+        </li>
+        <li>
+            <a href="{% url 'core_question_list' %}">{% trans 'Questions' %}</a>
+        </li>
+        <li class="active">
+            Essay
+        </li>
+    </ol>
+    <div class="page-header">
+        <a href="{% url 'core_question_list' %}" class="btn btn-lg pull-right" title="{% trans 'Question List' %}">
+            <i class="glyphicon glyphicon-question-sign"></i>
+        </a>
+        <h3>{% trans 'Add Essay Question' %}</h3>
+    </div>
+{% endblock %}
+{% block content %}
+    <form action="" method="post">{% csrf_token %}
+        {% load widget_tweaks %}
+
+        {% for field in form %}
+            <div class="form-group{% if field.errors %} has-error{% endif %}">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {% render_field field class="form-control" %}
+                {% for error in field.errors %}
+                    <p class="help-block">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <table class="table">
+            {{ answers.management_form }}
+
+            {% for form in answers.forms %}
+                {% if forloop.first %}
+                    <thead>
+                    <tr>
+                        {% for field in form.visible_fields %}
+                            <th>{{ field.label|capfirst }}</th>
+                        {% endfor %}
+                    </tr>
+                    </thead>
+                {% endif %}
+                <tr class="{% cycle "row1" "row2" %} formset_row">
+                    {% for field in form.visible_fields %}
+                        <td>
+                            <div class="form-group{% if field.errors %} has-error{% endif %}">
+                                {% render_field field class="form-control" %}
+                                {% for error in field.errors %}
+                                    <p class="help-block">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+        <input type="submit" value="Save" class="btn btn-success btn-block"/>
+    </form>
+{% endblock %}

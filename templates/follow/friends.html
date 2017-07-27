@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+{% block title %}Friends{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="friends">
+            <ul class="nav nav-tabs" style="margin-bottom: 1.4em;">
+                <li{% if active == 'followings' %} class="active"{% endif %}><a
+                        href="{% url 'followings' %}">{% trans "Following" %}</a></li>
+                <li{% if active == 'followers' %} class="active"{% endif %}><a
+                        href="{% url 'followers' %}">{% trans "Followers" %}</a></li>
+                <li{% if active == 'suggestions' %} class="active"{% endif %}><a
+                        href="{% url 'suggestions' %}">{% trans "Suggestions" %}</a></li>
+            </ul>
+            <div class="row">
+                {% for i, j, k in clist %}
+                    <div class="col-md-3">
+                        {% include 'follow/partial_friend.html' with friend=i button=j label=k %}
+                    </div>
+                    {% if forloop.counter|divisibleby:4 %}
+                        </div>
+                        <div class="row">
+                    {% endif %}
+                {% empty %}
+                    <h4 class="no-data">{% trans "No friend list to display" %}</h4>
+                {% endfor %}
+                <div class="row">
+                    <div class="col-md-12">
+                        {% include 'paginator.html' with paginator=friends %}
+                    </div>
+                </div>
+                </div>
+        </div>
+    </div>
+{% endblock %}
